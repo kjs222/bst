@@ -33,6 +33,24 @@ class BinarySearchTree
 
   end
 
+  def depth_of(value, current_node=@root, depth=0)
+    if include?(value)
+      if value == current_node.data.value
+        return depth
+      else
+        depth += 1
+        if value > current_node.data.value
+           depth_of(value, current_node.right, depth)
+        else
+           depth_of(value, current_node.left, depth)
+        end
+      end
+    else
+      nil
+    end
+  end
+
+
 
   def insert(node)
     if root.nil?

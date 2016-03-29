@@ -78,7 +78,7 @@ class TreeTest < MiniTest::Test
 
   end
 
-  def test_it_finds_value
+  def test_it_finds_value_when_there_and_not_when_not_there
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(98, "Animals United"))
     movie1_node = Node.new(Movie.new(58, "Armageddon"))
@@ -109,10 +109,36 @@ class TreeTest < MiniTest::Test
 
   end
 
-  def test_it_does_not_find_value
-    skip
-  end
+  def test_it_knows_depth_based_for_value_or_nil_if_none
+    tree = BinarySearchTree.new
+    root = Node.new(Movie.new(98, "Animals United"))
+    movie1_node = Node.new(Movie.new(58, "Armageddon"))
+    movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+    movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+    movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+    movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+    movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+    tree.insert(root)
+    tree.insert(movie1_node)
+    tree.insert(movie2_node)
+    tree.insert(movie3_node)
+    tree.insert(movie4_node)
+    tree.insert(movie5_node)
+    tree.insert(movie6_node)
 
+    assert_equal 0, tree.depth_of(98)
+    assert_equal 1, tree.depth_of(58)
+    assert_equal 2, tree.depth_of(36)
+    assert_equal 2, tree.depth_of(93)
+    assert_equal 3, tree.depth_of(86)
+    assert_equal 3, tree.depth_of(38)
+    assert_equal 4, tree.depth_of(69)
+    assert_equal nil, tree.depth_of(200)
+    assert_equal nil, tree.depth_of(17)
+
+
+
+  end
 
 
 
