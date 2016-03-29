@@ -50,6 +50,17 @@ class BinarySearchTree
     end
   end
 
+  def min(current_node=@root)
+    if !current_node.left
+      min_movie = current_node
+      return {min_movie.data.name => min_movie.data.value}
+    else
+      min(current_node.left)
+    end
+  end
+
+
+
 
 
   def insert(node)
