@@ -18,6 +18,22 @@ class BinarySearchTree
     end
   end
 
+  def include?(value, current_node=@root)
+    if value == current_node.data.value
+      true
+    else
+      if value > current_node.data.value && current_node.right
+         include?(value, current_node.right)
+      elsif value < current_node.data.value && current_node.left
+         include?(value, current_node.left)
+      else
+        false
+      end
+    end
+
+  end
+
+
   def insert(node)
     if root.nil?
       @root = node
