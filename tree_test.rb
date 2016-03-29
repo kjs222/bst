@@ -141,7 +141,7 @@ class TreeTest < MiniTest::Test
 
   end
 
-  def test_it_fins_min
+  def test_it_finds_min
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(98, "Animals United"))
     movie1_node = Node.new(Movie.new(58, "Armageddon"))
@@ -153,7 +153,7 @@ class TreeTest < MiniTest::Test
 
     tree.insert(root)
     tree.insert(movie1_node)
-    
+
     assert_equal ({"Armageddon"=>58}), tree.min
 
     tree.insert(movie3_node)
@@ -173,6 +173,37 @@ class TreeTest < MiniTest::Test
 
   end
 
+  def test_it_finds_max
+    tree = BinarySearchTree.new
+    root = Node.new(Movie.new(69, "Collateral Damage"))
+    movie1_node = Node.new(Movie.new(58, "Armageddon"))
+    movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+    movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+    movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+    movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+    movie6_node = Node.new(Movie.new(98, "Animals United"))
+
+    tree.insert(root)
+    tree.insert(movie1_node)
+
+    assert_equal ({"Collateral Damage"=>69}), tree.max
+
+    tree.insert(movie3_node)
+    tree.insert(movie4_node)
+
+    assert_equal ({"Bill & Ted's Excellent Adventure"=>93}), tree.max
+
+
+    tree.insert(movie5_node)
+    tree.insert(movie6_node)
+
+    assert_equal ({"Animals United"=>98}), tree.max
+
+    tree.insert(movie2_node)
+
+    assert_equal ({"Animals United"=>98}), tree.max
+
+  end
 
 
 

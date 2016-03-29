@@ -50,13 +50,24 @@ class BinarySearchTree
     end
   end
 
-  def min(current_node=@root)
-    if !current_node.left
-      min_movie = current_node
-      return {min_movie.data.name => min_movie.data.value}
+  def min_or_max(direction, current_node=@root)
+    #send allows the method passed in to be treated like a variable
+    if !current_node.send("#{direction}")
+      movie = current_node
+      return {movie.data.name => movie.data.value}
     else
-      min(current_node.left)
+      min_or_max(direction, current_node.send("#{direction}"))
     end
+  end
+
+  def min
+    direction = "left"
+    min_or_max(direction)
+  end
+
+  def max
+    direction = "right"
+    min_or_max(direction)
   end
 
 
