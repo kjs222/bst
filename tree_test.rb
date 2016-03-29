@@ -41,6 +41,24 @@ class TreeTest < MiniTest::Test
     assert_equal movie3_node, root.left.right
   end
 
+  def test_insert_returns_depth
+    tree = BinarySearchTree.new
+    root = Node.new(Movie.new(10, "Goonies"))
+    movie1_node = Node.new(Movie.new(5, "Shrek"))
+    movie2_node = Node.new(Movie.new(15, "Test"))
+    movie3_node = Node.new(Movie.new(7, "Test2"))
+    depth_root = tree.insert(root)
+    depth1 = tree.insert(movie1_node)
+    depth2 = tree.insert(movie2_node)
+    depth3 = tree.insert(movie3_node)
+    assert_equal 0, depth_root
+    assert_equal 1, depth1
+    assert_equal 1, depth2
+    assert_equal 2, depth3
+
+  end
+
+
 
 
 
