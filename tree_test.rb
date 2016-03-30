@@ -291,6 +291,9 @@ class TreeTest < MiniTest::Test
 
 
     assert_equal 7, tree.count(root)
+    assert_equal 6, tree.count(movie1_node)
+    assert_equal 1, tree.count(movie5_node)
+
 
   end
 
