@@ -205,6 +205,31 @@ class TreeTest < MiniTest::Test
 
   end
 
+  def test_it_sorts_correctly
+
+    tree = BinarySearchTree.new
+    root = Node.new(Movie.new(98, "Animals United"))
+    movie1_node = Node.new(Movie.new(58, "Armageddon"))
+    movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+    movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+    movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+    movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+    movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+    tree.insert(root)
+    tree.insert(movie1_node)
+    tree.insert(movie2_node)
+    tree.insert(movie3_node)
+    tree.insert(movie4_node)
+    tree.insert(movie5_node)
+    tree.insert(movie6_node)
+
+    expected_sort = [{"Bill & Ted's Bogus Journey"=>36}, {"Charlie's Country"=>38}, {"Armageddon"=>58}, {"Collateral Damage"=>69}, {"Charlie's Angels"=>86}, {"Bill & Ted's Excellent Adventure"=>93}, {"Animals United"=>98}]
+
+    assert_equal expected_sort, tree.sort
+
+  end
+
+
 
 
 

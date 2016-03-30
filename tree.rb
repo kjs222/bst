@@ -1,10 +1,17 @@
+require 'pry'
+require_relative 'node'
+require_relative 'movie'
 class BinarySearchTree
   def initialize
     @root = nil
+    @sorted = []
   end
 
   attr_accessor :root
+  attr_accessor :sorted
 
+  #returns the parent and the depth where it will be put (not parent's depth)
+  #traverses down left/right side of trees/subtrees until it finds an open space
   def find_insertion_point(value, current_node=@root, depth=0)
     depth += 1
     if value > current_node.data.value && current_node.right_open? || value < current_node.data.value && current_node.left_open?
@@ -70,6 +77,19 @@ class BinarySearchTree
     min_or_max(direction)
   end
 
+
+
+  def sort(current_node=@root)
+    if !current_node.nil?
+      sort(current_node.left)
+      movie = current_node
+      sorted.push({movie.data.name => movie.data.value})
+      sort(current_node.right)
+      return sorted
+    else
+      return
+    end
+  end
 
 
 
