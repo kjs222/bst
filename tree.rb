@@ -141,6 +141,26 @@ class BinarySearchTree
     return health_array
   end
 
+  def load(file, current_node=@root, count=0)
+    File.readlines(file).each do |line|
+      movie = line.split(', ', 2)
+      movie[0] =movie[0].to_i
+      movie[1] = movie[1].chomp
+      if current_node.nil? || include?(movie[0])
+        insert(Node.new(Movie.new(movie[0], movie[1])))
+        count += 1 #consider reduce
+      else
+        next
+      end
+    end
+    return count
+  end
+
+
+
+
+
+
 
 
 
@@ -149,20 +169,22 @@ end
 
 
   tree = BinarySearchTree.new
-  root = Node.new(Movie.new(98, "Animals United"))
-  movie1_node = Node.new(Movie.new(58, "Armageddon"))
-  movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
-  movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
-  movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
-  movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
-  movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
-  tree.insert(root)
-  tree.insert(movie1_node)
-  tree.insert(movie2_node)
-  tree.insert(movie3_node)
-  tree.insert(movie4_node)
-  tree.insert(movie5_node)
-  tree.insert(movie6_node)
+  # root = Node.new(Movie.new(98, "Animals United"))
+  # movie1_node = Node.new(Movie.new(58, "Armageddon"))
+  # movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+  # movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+  # movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+  # movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+  # movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+  # tree.insert(root)
+  # tree.insert(movie1_node)
+  # tree.insert(movie2_node)
+  # tree.insert(movie3_node)
+  # tree.insert(movie4_node)
+  # tree.insert(movie5_node)
+  # tree.insert(movie6_node)
+  p tree.load('movies.txt')
 
   #p tree.find_left_nodes_at_depth(0)
-  p tree.health(3)
+  p tree.count
+  p tree.sort
