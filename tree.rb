@@ -25,6 +25,21 @@ class BinarySearchTree
     end
   end
 
+  def insert(node)
+    if root.nil?
+      @root = node
+      return 0
+    else
+      parent, depth = find_insertion_point(node.data.value)
+      if node.data.value < parent.data.value
+        parent.left = node
+      else
+        parent.right = node
+      end
+      return depth
+    end
+  end
+
   def include?(value, current_node=@root)
     if value == current_node.data.value
       true
@@ -83,8 +98,8 @@ class BinarySearchTree
     if !current_node.nil?
       sort(current_node.left)
       movie = current_node
-
       sorted.push({movie.data.name => movie.data.value})
+      #review this again why the right hangs out here and doesnt need push
       sort(current_node.right)
       return sorted
     else
@@ -102,62 +117,52 @@ class BinarySearchTree
     end
   end
 
-
-  def health(depth, current_node=@root)
-    health_array = []
-    #can stay for all substrings
-    @sorted = []
-    total_sort = sort(current_node=@root)
-    # #unique to each substring
-    # @sorted = []
-    # sub_sort = sort(current_node=@root)
-    # @sorted = []
-    #
-    # current_node = root
-    # return [current_node.data.value, sub_sort.length, sub_sort.length/total_sort.length.to_f*100]
-
-
-
-    until depth_of(current_node.data.value) == depth || current_node.left.nil?
-      current_node = current_node.left
-      #binding.pry
-    end
-      @sorted = []
-      sub_sort = sort(current_node)
-      @sorted = []
-      health_array.push [current_node.data.value, sub_sort.length, ((sub_sort.length/total_sort.length.to_f)*100).round(1)]
-      return health_array
-
-
-
-    #3
-    #go right until depth_of(nodes value) == depth
-
-    #right right right
-    #right right left
-    #right left right
-    #right left left
-    #left right right
-    #left right left
-    #left left right
-    #left left left
-  end
-
-
-  def insert(node)
-    if root.nil?
-      @root = node
-      return 0
+  def find_nodes_at_depth(depth, current_node=@root, depth_arr =[])
+    if !current_node.nil? && depth_of(current_node.data.value) < depth
+      find_nodes_at_depth(depth, current_node.left, depth_arr)
+      depth_arr.push(current_node) if depth_of(current_node.data.value) == depth-1
+      find_nodes_at_depth(depth, current_node.right, depth_arr)
     else
-      parent, depth = find_insertion_point(node.data.value)
-      if node.data.value < parent.data.value
-        parent.left = node
-      else
-        parent.right = node
-      end
-      return depth
+      return
     end
+      return depth_arr
   end
+
+
+
+  def health(depth)
+    total_count = count(@root, counter=0)
+    health_array = []
+    nodes = find_nodes_at_depth(depth)
+    nodes.each do |node|
+      sub_tree_count = count(node)
+      health_array.push([node.data.value, sub_tree_count, ((sub_tree_count/total_count.to_f)*100).round(1)])
+    end
+    return health_array
+  end
+
+
 
 
 end
+
+
+
+  tree = BinarySearchTree.new
+  root = Node.new(Movie.new(98, "Animals United"))
+  movie1_node = Node.new(Movie.new(58, "Armageddon"))
+  movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+  movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+  movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+  movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+  movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+  tree.insert(root)
+  tree.insert(movie1_node)
+  tree.insert(movie2_node)
+  tree.insert(movie3_node)
+  tree.insert(movie4_node)
+  tree.insert(movie5_node)
+  tree.insert(movie6_node)
+
+  #p tree.find_left_nodes_at_depth(0)
+  p tree.health(3)
