@@ -218,7 +218,6 @@ class TreeTest < MiniTest::Test
 
 
   def test_it_counts
-
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(98, "Animals United"))
     movie1_node = Node.new(Movie.new(58, "Armageddon"))
@@ -234,7 +233,6 @@ class TreeTest < MiniTest::Test
     tree.insert(movie4_node)
     tree.insert(movie5_node)
     tree.insert(movie6_node)
-
 
     assert_equal 7, tree.count(root)
     assert_equal 6, tree.count(movie1_node)
@@ -289,12 +287,30 @@ class TreeTest < MiniTest::Test
 
     assert_equal 98, tree.health(0)[0][0]
     assert_equal 93, tree.health(2)[1][0]
-    assert_equal 100.0, tree.health(0)[0][2]
+    assert_equal 100, tree.health(0)[0][2]
+    assert_equal 85, tree.health(1)[0][2]
     assert_equal 6, tree.health(1)[0][1]
-
 
   end
 
+  def test_it_loads_files
+    tree = BinarySearchTree.new
+    tree.load('movies.txt')
+
+    assert_equal 99, tree.count
+    assert_equal ({"Cruel Intentions"=>0}), tree.sort[0]
+    assert_equal ({"The Hollow"=>1}), tree.sort[1]
+    assert_equal 71, tree.root.data.value
+    assert_equal "Hannibal Buress: Animal Furnace", tree.root.data.name
+    assert_equal 80, tree.root.right.data.value
+    assert_equal "Hannibal Buress: Comedy Camisado", tree.root.right.data.name
+    assert_equal ({"Cruel Intentions"=>0}), tree.min
+
+
+
+
+
+  end
 
 
 
