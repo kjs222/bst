@@ -83,6 +83,7 @@ class BinarySearchTree
     if !current_node.nil?
       sort(current_node.left)
       movie = current_node
+
       sorted.push({movie.data.name => movie.data.value})
       sort(current_node.right)
       return sorted
@@ -91,7 +92,60 @@ class BinarySearchTree
     end
   end
 
+  def count(current_node=@root, counter=0)
+    if !current_node.nil?
+      puts "value is #{current_node.data.value}"
+      puts "counter at begin #{counter}"
+      counter = counter + count(current_node.left, counter) + count(current_node.right, counter)
+      puts "value is #{current_node.data.value}"
+      counter +=1
+      puts "counter is #{counter}"
+      return counter
+    else
+      return 0
+    end
+  end
 
+
+  def health(depth, current_node=@root)
+    health_array = []
+    #can stay for all substrings
+    @sorted = []
+    total_sort = sort(current_node=@root)
+    # #unique to each substring
+    # @sorted = []
+    # sub_sort = sort(current_node=@root)
+    # @sorted = []
+    #
+    # current_node = root
+    # return [current_node.data.value, sub_sort.length, sub_sort.length/total_sort.length.to_f*100]
+
+
+
+    until depth_of(current_node.data.value) == depth || current_node.left.nil?
+      current_node = current_node.left
+      #binding.pry
+    end
+      @sorted = []
+      sub_sort = sort(current_node)
+      @sorted = []
+      health_array.push [current_node.data.value, sub_sort.length, ((sub_sort.length/total_sort.length.to_f)*100).round(1)]
+      return health_array
+
+
+
+    #3
+    #go right until depth_of(nodes value) == depth
+
+    #right right right
+    #right right left
+    #right left right
+    #right left left
+    #left right right
+    #left right left
+    #left left right
+    #left left left
+  end
 
 
   def insert(node)
@@ -111,3 +165,25 @@ class BinarySearchTree
 
 
 end
+
+
+
+
+  tree = BinarySearchTree.new
+  root = Node.new(Movie.new(98, "Animals United"))
+  movie1_node = Node.new(Movie.new(58, "Armageddon"))
+  movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+  movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+  movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+  movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+  movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+  tree.insert(root)
+  tree.insert(movie1_node)
+  tree.insert(movie2_node)
+  tree.insert(movie3_node)
+  tree.insert(movie4_node)
+  tree.insert(movie5_node)
+  tree.insert(movie6_node)
+
+
+   tree.count(root)
