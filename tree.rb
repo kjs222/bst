@@ -1,6 +1,6 @@
-require 'pry'
 require_relative 'node'
 require_relative 'movie'
+
 class BinarySearchTree
   def initialize
     @root = nil
@@ -93,7 +93,6 @@ class BinarySearchTree
   end
 
 
-
   def sort(current_node=@root)
     if !current_node.nil?
       sort(current_node.left)
@@ -118,9 +117,9 @@ class BinarySearchTree
   end
 
   def find_nodes_at_depth(depth, current_node=@root, depth_arr =[])
-    if !current_node.nil? && depth_of(current_node.data.value) < depth
+    if !current_node.nil? && depth_of(current_node.data.value) <= depth
       find_nodes_at_depth(depth, current_node.left, depth_arr)
-      depth_arr.push(current_node) if depth_of(current_node.data.value) == depth-1
+      depth_arr.push(current_node) if depth_of(current_node.data.value) == depth
       find_nodes_at_depth(depth, current_node.right, depth_arr)
     else
       return
@@ -169,22 +168,32 @@ end
 
 
   tree = BinarySearchTree.new
-  # root = Node.new(Movie.new(98, "Animals United"))
-  # movie1_node = Node.new(Movie.new(58, "Armageddon"))
-  # movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
-  # movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
-  # movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
-  # movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
-  # movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
-  # tree.insert(root)
-  # tree.insert(movie1_node)
-  # tree.insert(movie2_node)
-  # tree.insert(movie3_node)
-  # tree.insert(movie4_node)
-  # tree.insert(movie5_node)
-  # tree.insert(movie6_node)
-  p tree.load('movies.txt')
+  root = Node.new(Movie.new(98, "Animals United"))
+  movie1_node = Node.new(Movie.new(58, "Armageddon"))
+  movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+  movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+  movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+  movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+  movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+  tree.insert(root)
+  tree.insert(movie1_node)
+  tree.insert(movie2_node)
+  tree.insert(movie3_node)
+  tree.insert(movie4_node)
+  tree.insert(movie5_node)
+  tree.insert(movie6_node)
+  #p tree.load('movies.txt')
 
   #p tree.find_left_nodes_at_depth(0)
   p tree.count
   p tree.sort
+  puts
+  puts
+  array =  tree.find_nodes_at_depth(3)
+  array.each do |node|
+    puts node.data.name
+    puts node.data.value
+    puts
+  end
+
+  p tree.health(3)

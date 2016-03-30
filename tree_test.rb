@@ -6,6 +6,8 @@ require './movie'
 require 'pry'
 
 class TreeTest < MiniTest::Test
+
+
   def test_root_is_nil_at_instantiaion
     tree = BinarySearchTree.new
     assert_equal nil, tree.root
@@ -18,17 +20,18 @@ class TreeTest < MiniTest::Test
     assert_equal 10, tree.root.data.value
   end
 
-  def test_insertion_point_depth
+  def test_correct_insertion_point_for_first_after_root
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(10, "Goonies"))
     tree.insert(root)
     insertion_node, depth = tree.find_insertion_point(15)
     assert_equal root, insertion_node
     assert_equal 1, depth
+    insertion_node, depth = tree.find_insertion_point(5)
+    assert_equal 1, depth
   end
 
-  def test_insertion_correct_location
-
+  def test_insert_correct_location
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(98, "Animals United"))
     movie1_node = Node.new(Movie.new(58, "Armageddon"))
@@ -53,7 +56,7 @@ class TreeTest < MiniTest::Test
     assert_equal movie6_node, root.left.right.left.left
   end
 
-  def test_insert_returns_depth
+  def test_insert_returns_correct_depth
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(98, "Animals United"))
     movie1_node = Node.new(Movie.new(58, "Armageddon"))
@@ -79,7 +82,7 @@ class TreeTest < MiniTest::Test
 
   end
 
-  def test_it_finds_value_when_there_and_not_when_not_there
+  def test_it_knows_if_it_has_a_value
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(98, "Animals United"))
     movie1_node = Node.new(Movie.new(58, "Armageddon"))
@@ -105,12 +108,9 @@ class TreeTest < MiniTest::Test
     assert tree.include?(69)
     refute tree.include?(200)
     refute tree.include?(17)
-
-
-
   end
 
-  def test_it_knows_depth_based_for_value_or_nil_if_none
+  def test_it_knows_depth_of_a_value
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(98, "Animals United"))
     movie1_node = Node.new(Movie.new(58, "Armageddon"))
@@ -136,9 +136,6 @@ class TreeTest < MiniTest::Test
     assert_equal 4, tree.depth_of(69)
     assert_equal nil, tree.depth_of(200)
     assert_equal nil, tree.depth_of(17)
-
-
-
   end
 
   def test_it_finds_min
@@ -153,22 +150,17 @@ class TreeTest < MiniTest::Test
 
     tree.insert(root)
     tree.insert(movie1_node)
-
     assert_equal ({"Armageddon"=>58}), tree.min
 
     tree.insert(movie3_node)
     tree.insert(movie4_node)
-
     assert_equal ({"Armageddon"=>58}), tree.min
-
 
     tree.insert(movie5_node)
     tree.insert(movie6_node)
-
     assert_equal ({"Charlie's Country"=>38}), tree.min
 
     tree.insert(movie2_node)
-
     assert_equal ({"Bill & Ted's Bogus Journey"=>36}), tree.min
 
   end
@@ -185,22 +177,17 @@ class TreeTest < MiniTest::Test
 
     tree.insert(root)
     tree.insert(movie1_node)
-
     assert_equal ({"Collateral Damage"=>69}), tree.max
 
     tree.insert(movie3_node)
     tree.insert(movie4_node)
-
     assert_equal ({"Bill & Ted's Excellent Adventure"=>93}), tree.max
-
 
     tree.insert(movie5_node)
     tree.insert(movie6_node)
-
     assert_equal ({"Animals United"=>98}), tree.max
 
     tree.insert(movie2_node)
-
     assert_equal ({"Animals United"=>98}), tree.max
 
   end
@@ -229,47 +216,6 @@ class TreeTest < MiniTest::Test
 
   end
 
-  # def test_it_can_get_health_at_depth_0
-  #
-  #   tree = BinarySearchTree.new
-  #   root = Node.new(Movie.new(98, "Animals United"))
-  #   movie1_node = Node.new(Movie.new(58, "Armageddon"))
-  #   movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
-  #   movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
-  #   movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
-  #   movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
-  #   movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
-  #   tree.insert(root)
-  #   tree.insert(movie1_node)
-  #   tree.insert(movie2_node)
-  #   tree.insert(movie3_node)
-  #   tree.insert(movie4_node)
-  #   tree.insert(movie5_node)
-  #   tree.insert(movie6_node)
-  #
-  #   assert_equal [[98, 7, 100.0]], tree.health(0)
-  # end
-  #
-  # def test_it_can_get_health_of_one_substring
-  #
-  #   tree = BinarySearchTree.new
-  #   root = Node.new(Movie.new(98, "Animals United"))
-  #   movie1_node = Node.new(Movie.new(58, "Armageddon"))
-  #   movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
-  #   movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
-  #   movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
-  #   movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
-  #   movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
-  #   tree.insert(root)
-  #   tree.insert(movie1_node)
-  #   tree.insert(movie2_node)
-  #   tree.insert(movie3_node)
-  #   tree.insert(movie4_node)
-  #   tree.insert(movie5_node)
-  #   tree.insert(movie6_node)
-  #
-  #   assert_equal [[58, 6, 85.7]], tree.health(1)
-  # end
 
   def test_it_counts
 
@@ -294,10 +240,9 @@ class TreeTest < MiniTest::Test
     assert_equal 6, tree.count(movie1_node)
     assert_equal 1, tree.count(movie5_node)
 
-
   end
 
-  def test_it_finds_nodes_at_0_depth
+  def test_it_finds_nodes_at_depth
     tree = BinarySearchTree.new
     root = Node.new(Movie.new(98, "Animals United"))
     movie1_node = Node.new(Movie.new(58, "Armageddon"))
@@ -314,12 +259,41 @@ class TreeTest < MiniTest::Test
     tree.insert(movie5_node)
     tree.insert(movie6_node)
 
-
-    #assert_equal [root], tree.find_nodes_at_depth(0)
+    assert_equal 1, tree.find_nodes_at_depth(0).length
+    assert_equal 1, tree.find_nodes_at_depth(1).length
+    assert_equal 2, tree.find_nodes_at_depth(2).length
+    assert_equal 2, tree.find_nodes_at_depth(3).length
+    assert_equal 1, tree.find_nodes_at_depth(4).length
+    assert_equal 0, tree.find_nodes_at_depth(5).length
     assert_equal [movie1_node], tree.find_nodes_at_depth(1)
+    assert_equal [movie2_node, movie3_node], tree.find_nodes_at_depth(2)
 
   end
 
+  def test_it_finds_health
+    tree = BinarySearchTree.new
+    root = Node.new(Movie.new(98, "Animals United"))
+    movie1_node = Node.new(Movie.new(58, "Armageddon"))
+    movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+    movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+    movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+    movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+    movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+    tree.insert(root)
+    tree.insert(movie1_node)
+    tree.insert(movie2_node)
+    tree.insert(movie3_node)
+    tree.insert(movie4_node)
+    tree.insert(movie5_node)
+    tree.insert(movie6_node)
+
+    assert_equal 98, tree.health(0)[0][0]
+    assert_equal 93, tree.health(2)[1][0]
+    assert_equal 100.0, tree.health(0)[0][2]
+    assert_equal 6, tree.health(1)[0][1]
+
+
+  end
 
 
 
