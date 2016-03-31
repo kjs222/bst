@@ -226,9 +226,10 @@ class BinarySearchTree
   end
 
 
-
+  #doesn't handle root yet
   def delete(value)
-    #need to handle root
+    return nil if !include?(value)
+    
     node_to_delete = find_node(value)
     node_to_delete_left = node_to_delete.left
     node_to_delete_right = node_to_delete.right
@@ -274,38 +275,43 @@ class BinarySearchTree
         parent.right = child
       end
     end
-
+  return value
   end
+
 end
 
-
-tree = BinarySearchTree.new
-root = Node.new(Movie.new(98, "Animals United"))
-movie1_node = Node.new(Movie.new(58, "Armageddon"))
-movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
-movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
-movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
-movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
-movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
-tree.insert(root)
-tree.insert(movie1_node)
-tree.insert(movie2_node)
-tree.insert(movie3_node)
-tree.insert(movie4_node)
-tree.insert(movie5_node)
-tree.insert(movie6_node)
-
-#p tree.sort
-puts
-puts "deleting 38"
-tree.delete(38)
-p tree.sort
-
-puts
-puts "deleting 86"
-tree.delete(86)
-p tree.sort
-
-puts "deleting 58"
-tree.delete(58)
-p tree.sort
+#
+# tree = BinarySearchTree.new
+# root = Node.new(Movie.new(98, "Animals United"))
+# movie1_node = Node.new(Movie.new(58, "Armageddon"))
+# movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+# movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+# movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+# movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+# movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+# tree.insert(root)
+# tree.insert(movie1_node)
+# tree.insert(movie2_node)
+# tree.insert(movie3_node)
+# tree.insert(movie4_node)
+# tree.insert(movie5_node)
+# tree.insert(movie6_node)
+#
+# #p tree.sort
+# puts
+# puts "deleting 38"
+# p tree.delete(38)
+# p tree.sort
+#
+# puts
+# puts "deleting 86"
+# p tree.delete(86)
+# p tree.sort
+#
+# puts "deleting 58"
+# p tree.delete(58)
+# p tree.sort
+#
+# puts "deleting 500"
+# p tree.delete(500)
+# p tree.sort
