@@ -486,6 +486,29 @@ class TreeTest < MiniTest::Test
     #not working yet, did not incorporate
   end
 
+  def test_it_does_everything
+    tree = BinarySearchTree.new
+    tree.load('movies.txt')
+    original_length = tree.sort.length
+    assert_equal 71, tree.root.data.value
+    assert_equal 80, tree.root.right.data.value
+    assert_equal 17, tree.root.left.data.value
+    assert_equal 99, tree.count
+    assert_equal [51], tree.sort[50].values
+    assert_equal [[71, 99, 100]], tree.health(0)
+    assert_equal 1, tree.depth_of(80)
+    assert_equal 2, tree.depth_of(55)
+    assert_equal 2, tree.find_nodes_at_depth(1).length
+
+    tree.delete(80)
+    assert_equal original_length-1, tree.sort.length
+    refute_equal 80, tree.root.right.data.value
+    assert_equal 81, tree.root.right.data.value
+
+
+  end
+
+
 
 
 
