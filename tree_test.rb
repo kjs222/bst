@@ -265,6 +265,7 @@ class TreeTest < MiniTest::Test
     assert_equal 0, tree.find_nodes_at_depth(5).length
     assert_equal [movie1_node], tree.find_nodes_at_depth(1)
     assert_equal [movie2_node, movie3_node], tree.find_nodes_at_depth(2)
+    assert_equal [], tree.find_nodes_at_depth(10)
 
   end
 
@@ -305,12 +306,75 @@ class TreeTest < MiniTest::Test
     assert_equal 80, tree.root.right.data.value
     assert_equal "Hannibal Buress: Comedy Camisado", tree.root.right.data.name
     assert_equal ({"Cruel Intentions"=>0}), tree.min
+  end
+
+  def test_it_counts_leaves
+    tree = BinarySearchTree.new
+    root = Node.new(Movie.new(98, "Animals United"))
+    movie1_node = Node.new(Movie.new(58, "Armageddon"))
+    movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+    movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+    movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+    movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+    movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+    movie7_node = Node.new(Movie.new(32, "test"))
+    movie8_node = Node.new(Movie.new(101, "test"))
+    movie9_node = Node.new(Movie.new(110, "test"))
+    tree.insert(root)
+    tree.insert(movie1_node)
+    tree.insert(movie2_node)
+    tree.insert(movie3_node)
+    tree.insert(movie4_node)
+    tree.insert(movie5_node)
+    tree.insert(movie6_node)
+    tree.insert(movie7_node)
+    tree.insert(movie8_node)
+    tree.insert(movie9_node)
+
+    assert_equal 4, tree.leaves
+  end
 
 
+  def test_it_finds_height
+    tree = BinarySearchTree.new
+    root = Node.new(Movie.new(98, "Animals United"))
+    movie1_node = Node.new(Movie.new(58, "Armageddon"))
+    movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+    movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+    movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+    movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+    movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+    movie7_node = Node.new(Movie.new(65, "test"))
+    movie8_node = Node.new(Movie.new(63, "test"))
+    tree.insert(root)
+    tree.insert(movie1_node)
+    tree.insert(movie2_node)
+    tree.insert(movie3_node)
 
+    assert_equal 3, tree.height
+
+    tree.insert(movie4_node)
+    assert_equal 4, tree.height
+
+    tree.insert(movie5_node)
+    assert_equal 4, tree.height
+
+    tree.insert(movie6_node)
+    assert_equal 5, tree.height
+
+    tree.insert(movie7_node)
+    assert_equal 6, tree.height
+
+    tree.insert(movie8_node)
+    assert_equal 7, tree.height
 
 
   end
+
+
+
+
+
 
 
 

@@ -166,4 +166,30 @@ class BinarySearchTree
     return count
   end
 
+  def leaves(current_node=@root, count=0)
+    if !current_node.nil? && !current_node.leaf?
+      count = count + leaves(current_node.left, count) + leaves(current_node.right, count)
+    elsif current_node.nil?
+      return 0
+    else
+      count +=1
+      return count
+    end
+  end
+
+  def height(depth=0)
+    until find_nodes_at_depth(depth).empty?
+      depth += 1
+      find_nodes_at_depth(depth).empty?
+    end
+    depth
+  end
+
+
+
+
+
+
+
+
 end
