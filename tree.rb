@@ -186,8 +186,47 @@ class BinarySearchTree
   end
 
 
+  def find_node_to_delete(value, current_node=@root)
+    if current_node.nil?
+      return
+    else
+      if value == current_node.data.value
+        return current_node
+      elsif value < current_node.data.value
+        find_node_to_delete(value, current_node.left)
+      else
+        find_node_to_delete(value, current_node.right)
+      end
+    end
+  end
 
+  def find_parent_of_node(value, current_node=@root)
+    if current_node.nil?
+      return
+    else
+      if (!current_node.right.nil? && value == current_node.right.data.value) || (!current_node.left.nil? && value == current_node.left.data.value)
+        return current_node
+      elsif !current_node.left.nil? && value < current_node.data.value
+        find_parent_of_node(value, current_node.left)
+      elsif !current_node.right.nil? && value > current_node.data.value
+        find_parent_of_node(value, current_node.right)
+      else
+        return
+      end
+    end
+  end
 
+  def delete(value)
+    node_to_delete = find_node_to_delete(value)
+    if node_to_delete.leaf?
+      #get it's parent and delete its left or right
+
+    elsif node_to_delete.full?
+
+    else
+
+    end
+  end
 
 
 

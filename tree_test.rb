@@ -371,7 +371,58 @@ class TreeTest < MiniTest::Test
 
   end
 
+  # def test_it_finds_node_to_delete
+  #   tree = BinarySearchTree.new
+  #   root = Node.new(Movie.new(98, "Animals United"))
+  #   movie1_node = Node.new(Movie.new(58, "Armageddon"))
+  #   movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+  #   movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+  #   movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+  #   movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+  #   movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+  #   tree.insert(root)
+  #   tree.insert(movie1_node)
+  #   tree.insert(movie2_node)
+  #   tree.insert(movie3_node)
+  #   tree.insert(movie4_node)
+  #   tree.insert(movie5_node)
+  #   tree.insert(movie6_node)
+  #
+  #   assert_equal "Charlie's Angels", tree.find_node_to_delete(86).data.name
+  # end
 
+  def test_it_finds_a_parent
+    tree = BinarySearchTree.new
+    root = Node.new(Movie.new(98, "Animals United"))
+    movie1_node = Node.new(Movie.new(58, "Armageddon"))
+    movie2_node = Node.new(Movie.new(36, "Bill & Ted's Bogus Journey"))
+    movie3_node = Node.new(Movie.new(93, "Bill & Ted's Excellent Adventure"))
+    movie4_node = Node.new(Movie.new(86, "Charlie's Angels"))
+    movie5_node = Node.new(Movie.new(38, "Charlie's Country"))
+    movie6_node = Node.new(Movie.new(69, "Collateral Damage"))
+    tree.insert(root)
+    tree.insert(movie1_node)
+    tree.insert(movie2_node)
+    tree.insert(movie3_node)
+    tree.insert(movie4_node)
+    tree.insert(movie5_node)
+    tree.insert(movie6_node)
+
+    assert_equal "Bill & Ted's Excellent Adventure", tree.find_parent_of_node(86).data.name
+  end
+
+
+  def test_it_deletes_a_leaf
+
+  end
+
+  def test_it_deletes_node_with_one_child
+
+  end
+
+  def test_it_deletes_node_with_two_children
+
+  end
 
 
 
